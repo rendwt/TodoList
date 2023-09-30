@@ -10,10 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
-@WebServlet("/addlistitemservlet")
-public class AddListItemServlet extends HttpServlet{
+@WebServlet("/editlistitemservlet")
+public class EditListItemServlet extends HttpServlet {
     private GroceryListDAO groceryListDAO;
 
     public void init() throws ServletException {
@@ -23,17 +22,12 @@ public class AddListItemServlet extends HttpServlet{
 
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int itemId = Integer.parseInt(request.getParameter("itemId"));
         String itemName = request.getParameter("itemName");
-        int qty = Integer.parseInt(request.getParameter("quantity"));
-        String unit = request.getParameter("unit");
-        String status = "to be completed";
-        groceryListDAO.addListItem(itemName, qty, unit, status);
-        PrintWriter out = response.getWriter();
-        out.println("<p>Item added to list</p>");
-        out.println("<a href=\"displaylist.jsp\">Add another item</a><br>");
-        out.println("<a href=\"displaylist.jsp\">Display list</a>");
-        out.close();
-
+        int itemQty = Integer.parseInt(request.getParameter("itemQty"));
+        String itemUnit = request.getParameter("itemUnit");
+        groceryListDAO.editListItem(itemId,itemName,itemQty,itemUnit);
+        response.sendRedirect("displaylist.jsp");
     }
 }

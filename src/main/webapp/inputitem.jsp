@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Item Information Form</title>
+    <title>Add list item</title>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
     <h2>Enter Item Information</h2>
@@ -17,6 +18,6 @@
 
         <input type="submit" value="Submit">
     </form>
-    <a href="index.jsp">Back to Home Page</a>
+    <a href="index.jsp" class="button-link">Back to Home Page</a>
 </body>
 </html>
