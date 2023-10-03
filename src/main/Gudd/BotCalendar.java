@@ -1,4 +1,3 @@
-package org.example;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -51,7 +50,7 @@ import java.util.List;
          * If modifying these scopes, delete your previously saved tokens/ folder.
          */
         private static final List<String> SCOPES =
-                Collections.singletonList(CalendarScopes.CALENDAR_READONLY);
+                Collections.singletonList(CalendarScopes.CALENDAR);
         private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
 
         /**
@@ -64,13 +63,14 @@ import java.util.List;
 
 
         private final Calendar service;
+
         public BotCalendar() throws GeneralSecurityException, IOException {
             final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-             service =
+            service =
                     new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
                             .setApplicationName(APPLICATION_NAME)
                             .build();
-        }
+                    }
 
         public static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT)
                 throws IOException {
@@ -111,47 +111,36 @@ import java.util.List;
             return items;
         }
 
-      public void addEvent(String summary, String startDateTime, String endDateTime) throws IOException, ParseException {
-          System.out.println("from addEvent method");
-          System.out.println(summary);
-          System.out.println(startDateTime);
-          System.out.println(endDateTime);
-
-          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-
-          LocalDateTime startDateTimef = LocalDateTime.parse(startDateTime, formatter);
-          LocalDateTime endDateTimef = LocalDateTime.parse(endDateTime, formatter);
-          System.out.println(startDateTimef);
-
-          DateTime start = new DateTime(startDateTimef.toInstant(ZoneOffset.UTC).toEpochMilli());
-           DateTime end = new DateTime(endDateTimef.toInstant(ZoneOffset.UTC).toEpochMilli());
-          System.out.println(start);
-
-          // Print the EventDateTime for verification
-         System.out.println("start: "+ start);
-          System.out.println("end"+ end);
 
 
-          Event event = new Event()
-                  .setSummary(summary)
-                  .setDescription("Event created via Telegram bot")
-                  .setStart(new EventDateTime().setDateTime(start))
-                  .setEnd(new EventDateTime().setDateTime(end));
+        public boolean addEvent(String summary, String startDateTime, String endDateTime) throws IOException, ParseException {
+            boolean cnfrm=false;
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
-          System.out.println(event);
-          System.out.println("setting event");
-          String cid="primary";
-          try {
-              service.events().insert(cid, event).execute();
-          }catch (Exception e) {
-              e.printStackTrace();
-              System.err.println("Error adding event to Google Calendar: " + e.getMessage());
-          }
+            LocalDateTime startDateTimef = LocalDateTime.parse(startDateTime, formatter);
+            LocalDateTime endDateTimef = LocalDateTime.parse(endDateTime, formatter);
+            System.out.println(startDateTimef);
 
-          System.out.println("check calendar");
-        //  event = service.events().insert("guddu.kr234@gmail.com", event).execute();
-         // System.out.println("Event created");
-        //  System.out.printf("Event created: %s\n", event.getHtmlLink());
+            DateTime start = new DateTime(startDateTimef.toInstant(ZoneOffset.UTC).toEpochMilli());
+            DateTime end = new DateTime(endDateTimef.toInstant(ZoneOffset.UTC).toEpochMilli());
+            System.out.println(start);
 
-         }
+            Event event = new Event()
+                    .setSummary(summary)
+                    .setDescription("Event created via Telegram bot")
+                    .setStart(new EventDateTime().setDateTime(start))
+                    .setEnd(new EventDateTime().setDateTime(end));
+
+            System.out.println(event);
+            String cid = "primary";
+            try {
+                service.events().insert(cid, event).execute();
+                cnfrm=true;
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.err.println("Error adding event to Google Calendar: " + e.getMessage());
+            }
+            return cnfrm;
+        }
+
     }
