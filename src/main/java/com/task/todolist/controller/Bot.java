@@ -1,8 +1,11 @@
-package org.example;
+package com.task.todolist.controller;
 
 
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventAttendee;
+import com.google.api.services.calendar.model.EventDateTime;
+import com.task.todolist.dao.GoogleCalendarEventDAO;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -10,10 +13,14 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import javax.servlet.ServletException;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.text.ParseException;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,23 +29,25 @@ public class Bot extends TelegramLongPollingBot {
      public Map<Long, BotState> userStates = new HashMap<>();
    public Map<Long, Map<BotState, String>> userResponses = new HashMap<>();
     String summary ;
+    String description ;
     String startDateTime ;
     String endDateTime ;
     private enum BotState {
         IDLE,
         WAITING_FOR_EVENT_SUMMARY,
+        WAITING_FOR_EVENT_DESCRIPTION,
         WAITING_FOR_START_DATE,
         WAITING_FOR_END_DATE
     }
 
     @Override
     public String getBotUsername() {
-        return "KNGjavabot";
+        return "CourseTodoList_bot";
     }
 
     @Override
     public String getBotToken() {
-        return "6471445956:AAHLwJps-lua4NL04P_a6Qcv7l5Do4gR9wo";
+        return "6576672471:AAGVuPWvyys3U7oqb7ILytkkeF9Nf1km5kw";
     }
 
     @Override
@@ -67,11 +76,9 @@ public class Bot extends TelegramLongPollingBot {
                 //calendar details
 
                 try {
-                    BotCalendar cal = new BotCalendar();
-                    List<Event> events = cal.getEvent();
+                    GoogleCalendarEventDAO eventDAO = new GoogleCalendarEventDAO();
+                    List<Event> events = eventDAO.getEvents("primary");
                     viewEvent(message.getChatId(), events);
-                } catch (GeneralSecurityException e) {
-                    throw new RuntimeException(e);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -99,6 +106,13 @@ public class Bot extends TelegramLongPollingBot {
 //                            Message msg= update.getMessage();
                             summary = update.getMessage().getText();
 
+                            userStates.put(who, BotState.WAITING_FOR_EVENT_DESCRIPTION);
+                            sendText(who, "Please enter the description of event");
+                            break;
+                        case WAITING_FOR_EVENT_DESCRIPTION:
+                            // Store the event summary, then ask for start date
+//                            Message msg= update.getMessage();
+                            description = update.getMessage().getText();
                             userStates.put(who, BotState.WAITING_FOR_START_DATE);
                             sendText(who, "Please enter the start date in YYYY-MM-DD format:");
                             break;
@@ -119,15 +133,9 @@ public class Bot extends TelegramLongPollingBot {
 
                             userStates.put(who, BotState.IDLE);
                             userResponses.remove(who);
-                            BotCalendar cal = null;
                             try {
-                                cal = new BotCalendar();
-                                cal.addEvent(summary, startDateTime, endDateTime);
-                            } catch (GeneralSecurityException e) {
-                                throw new RuntimeException(e);
+                                createEvent(summary, description, startDateTime, endDateTime);
                             } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            } catch (ParseException e) {
                                 throw new RuntimeException(e);
                             }
                             break;
@@ -228,7 +236,23 @@ private void startConversation(Long chatId) {
         sendText(chatId,messageText.toString());
     }
 
+    public void createEvent(String summary, String description, String sdt, String edt) throws IOException {
+        GoogleCalendarEventDAO eventDAO = new GoogleCalendarEventDAO();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
+        LocalDateTime startDateTime = LocalDateTime.parse(sdt, formatter);
+        LocalDateTime endDateTime = LocalDateTime.parse(edt, formatter);
+
+        DateTime start = new DateTime(startDateTime.toInstant(ZoneOffset.UTC).toEpochMilli());
+        DateTime end = new DateTime(endDateTime.toInstant(ZoneOffset.UTC).toEpochMilli());
+        Event event = new Event()
+                .setSummary(summary)
+                .setDescription(description)
+                .setStart(new EventDateTime().setDateTime(start))
+                .setEnd(new EventDateTime().setDateTime(end));
+
+        Event createdEvent = eventDAO.createEvent(event, "primary");
+    }
 }
 
 

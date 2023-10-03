@@ -32,7 +32,7 @@ public class CreateCalendarEventServlet extends HttpServlet {
             String endDateTimeStr = request.getParameter("endDateTime");
             String participants = request.getParameter("participants");
 
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
             LocalDateTime startDateTime = LocalDateTime.parse(startDateTimeStr, formatter);
             LocalDateTime endDateTime = LocalDateTime.parse(endDateTimeStr, formatter);
