@@ -16,7 +16,6 @@
         <select id="role" name="role">
             <option value="admin">Admin</option>
             <option value="user">User</option>
-            <option value="guest">Guest</option>
         </select><br><br>
 
         <input type="submit" value="Register">

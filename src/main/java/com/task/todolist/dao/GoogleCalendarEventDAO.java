@@ -59,6 +59,8 @@ public class GoogleCalendarEventDAO{
             throw new RuntimeException(e);
         }
         try {
+            Credential credential = getCredentials(HTTP_TRANSPORT);
+            credential = refreshExpiredToken(credential);
             calendarService =
                     new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
                             .setApplicationName(APPLICATION_NAME)
@@ -92,5 +94,11 @@ public class GoogleCalendarEventDAO{
 
     public void deleteEvent(String eventId, String calendarId) throws IOException {
         calendarService.events().delete(calendarId, eventId).execute();
+    }
+    public Credential refreshExpiredToken(Credential credential) throws IOException {
+        if (credential.getExpiresInSeconds() != null && credential.getExpiresInSeconds() <= 60) {
+            credential.refreshToken();
+        }
+        return credential;
     }
 }
