@@ -53,9 +53,6 @@ public class GroceryListDAO {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setObject(1,itemId);
             preparedStatement.executeUpdate();
-            /*query ="ALTER SEQUENCE grocerylist_itemid_seq RESTART WITH (SELECT MAX(itemid) + 1 FROM grocerylist)";
-            preparedStatement = connection.prepareStatement(query);
-            preparedStatement.executeUpdate();*/
         }catch (SQLException e){
             e.printStackTrace();
         }finally {

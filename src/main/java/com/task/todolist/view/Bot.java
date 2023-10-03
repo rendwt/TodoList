@@ -1,4 +1,4 @@
-package com.task.todolist.controller;
+package com.task.todolist.view;
 
 
 import com.google.api.client.util.DateTime;
