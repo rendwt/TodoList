@@ -1,6 +1,7 @@
 package com.task.todolist.controller;
 
 import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventDateTime;
 import com.task.todolist.dao.GoogleCalendarEventDAO;
 import com.task.todolist.model.GroceryList;
 
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @WebServlet("/geteventservlet")
@@ -38,8 +41,8 @@ public class GetEventServlet extends HttpServlet {
                     html.append("<tr>");
                     html.append("<td>").append(event.getSummary()).append("</td>");
                     html.append("<td>").append(event.getDescription()).append("</td>");
-                    html.append("<td>").append(event.getStart().getDateTime()).append("</td>");
-                    html.append("<td>").append(event.getEnd().getDateTime()).append("</td>");
+                    html.append("<td>").append(datetimeFormat(event.getStart())).append("</td>");
+                    html.append("<td>").append(datetimeFormat(event.getEnd())).append("</td>");
                     html.append("</tr>");
                 }
 
@@ -55,6 +58,12 @@ public class GetEventServlet extends HttpServlet {
             e.printStackTrace();
             response.getWriter().write("Error retrieving events.");
         }
+    }
+
+    public String datetimeFormat(EventDateTime event){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy  HH:mm");
+        Date dateTime = new Date(event.getDateTime().getValue());
+        return simpleDateFormat.format(dateTime);
     }
 }
 
