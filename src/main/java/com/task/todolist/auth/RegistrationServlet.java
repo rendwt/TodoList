@@ -1,6 +1,6 @@
 package com.task.todolist.auth;
 
-import com.task.todolist.dao.UsersDAO;
+import com.task.todolist.model.UsersDAO;
 import com.task.todolist.model.User;
 import org.apache.commons.dbcp2.BasicDataSource;
 

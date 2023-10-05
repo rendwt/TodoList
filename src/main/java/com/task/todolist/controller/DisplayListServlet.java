@@ -1,6 +1,6 @@
 package com.task.todolist.controller;
 
-import com.task.todolist.dao.GroceryListDAO;
+import com.task.todolist.model.GroceryListDAO;
 import com.task.todolist.model.GroceryList;
 import org.apache.commons.dbcp2.BasicDataSource;
 

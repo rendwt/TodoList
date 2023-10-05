@@ -1,4 +1,4 @@
-package com.task.todolist.dao;
+package com.task.todolist.model;
 
 import com.task.todolist.model.GroceryList;
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -23,9 +23,6 @@ public class CompletedGroceryListDAO {
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setObject(1,itemId);
             preparedStatement.executeUpdate();
-            /*query ="ALTER SEQUENCE grocerylist_itemid_seq RESTART WITH (SELECT MAX(itemid) + 1 FROM grocerylist)";
-            preparedStatement = connection.prepareStatement(query);
-            preparedStatement.executeUpdate();*/
         }catch (SQLException e){
             e.printStackTrace();
         }finally {

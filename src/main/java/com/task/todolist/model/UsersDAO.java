@@ -1,4 +1,4 @@
-package com.task.todolist.dao;
+package com.task.todolist.model;
 
 import com.task.todolist.model.User;
 import org.apache.commons.dbcp2.BasicDataSource;

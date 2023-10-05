@@ -1,7 +1,6 @@
 package com.task.todolist.controller;
 
-import com.task.todolist.dao.CompletedGroceryListDAO;
-import com.task.todolist.dao.GroceryListDAO;
+import com.task.todolist.model.CompletedGroceryListDAO;
 import org.apache.commons.dbcp2.BasicDataSource;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;

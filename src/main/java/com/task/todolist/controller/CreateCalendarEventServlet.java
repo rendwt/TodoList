@@ -4,7 +4,7 @@ import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventAttendee;
 import com.google.api.services.calendar.model.EventDateTime;
-import com.task.todolist.dao.GoogleCalendarEventDAO;
+import com.task.todolist.model.GoogleCalendarService;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,10 +18,10 @@ import java.util.Arrays;
 
 @WebServlet("/createeventservlet")
 public class CreateCalendarEventServlet extends HttpServlet {
-    private GoogleCalendarEventDAO eventDAO;
+    private GoogleCalendarService eventDAO;
 
     public void init() throws ServletException {
-        eventDAO = new GoogleCalendarEventDAO();
+        eventDAO = new GoogleCalendarService();
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

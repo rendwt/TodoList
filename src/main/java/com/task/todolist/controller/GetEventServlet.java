@@ -2,8 +2,7 @@ package com.task.todolist.controller;
 
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
-import com.task.todolist.dao.GoogleCalendarEventDAO;
-import com.task.todolist.model.GroceryList;
+import com.task.todolist.model.GoogleCalendarService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,10 +17,10 @@ import java.util.List;
 
 @WebServlet("/geteventservlet")
 public class GetEventServlet extends HttpServlet {
-    private GoogleCalendarEventDAO eventDAO;
+    private GoogleCalendarService eventDAO;
 
     public void init() throws ServletException {
-        eventDAO = new GoogleCalendarEventDAO();
+        eventDAO = new GoogleCalendarService();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

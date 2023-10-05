@@ -3,9 +3,8 @@ package com.task.todolist.view;
 
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.Event;
-import com.google.api.services.calendar.model.EventAttendee;
 import com.google.api.services.calendar.model.EventDateTime;
-import com.task.todolist.dao.GoogleCalendarEventDAO;
+import com.task.todolist.model.GoogleCalendarService;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -13,14 +12,10 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import javax.servlet.ServletException;
 import java.io.IOException;
-import java.security.GeneralSecurityException;
-import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,7 +71,7 @@ public class Bot extends TelegramLongPollingBot {
                 //calendar details
 
                 try {
-                    GoogleCalendarEventDAO eventDAO = new GoogleCalendarEventDAO();
+                    GoogleCalendarService eventDAO = new GoogleCalendarService();
                     List<Event> events = eventDAO.getEvents("primary");
                     viewEvent(message.getChatId(), events);
                 } catch (IOException e) {
@@ -237,7 +232,7 @@ private void startConversation(Long chatId) {
     }
 
     public void createEvent(String summary, String description, String sdt, String edt) throws IOException {
-        GoogleCalendarEventDAO eventDAO = new GoogleCalendarEventDAO();
+        GoogleCalendarService eventDAO = new GoogleCalendarService();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
         LocalDateTime startDateTime = LocalDateTime.parse(sdt, formatter);
