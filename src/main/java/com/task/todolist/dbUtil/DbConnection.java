@@ -1,6 +1,7 @@
 package com.task.todolist.dbUtil;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,6 +16,8 @@ import java.util.Properties;
 public class DbConnection extends HttpServlet {
     private static final String DB_PROPERTIES_PATH = "/WEB-INF/db.properties";
     private BasicDataSource connectionPool;
+
+
 
     public void init() throws ServletException {
         ServletContext context = getServletContext();

@@ -1,4 +1,4 @@
-package com.task.todolist.controller;
+package com.task.todolist.webcontroller;
 
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
@@ -25,7 +25,6 @@ public class GetEventServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-
             List<Event> events = eventDAO.getEvents("primary");
             StringBuilder html = new StringBuilder();
             if(events.isEmpty()){

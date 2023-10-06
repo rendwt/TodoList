@@ -1,4 +1,4 @@
-package com.task.todolist.controller;
+package com.task.todolist.webcontroller;
 
 import com.task.todolist.model.CompletedGroceryListDAO;
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -18,8 +18,8 @@ public class UpdateCompletedListServlet extends HttpServlet {
         ServletContext context = getServletContext();
         BasicDataSource connectionPool = (BasicDataSource) context.getAttribute("connectionPool");
         completedGroceryListDAO = new CompletedGroceryListDAO(connectionPool);
-
     }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         int id = Integer.parseInt(request.getParameter("id"));

@@ -1,4 +1,4 @@
-package com.task.todolist.controller;
+package com.task.todolist.webcontroller;
 
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.Event;
@@ -45,19 +45,14 @@ public class CreateCalendarEventServlet extends HttpServlet {
                     .setStart(new EventDateTime().setDateTime(start))
                     .setEnd(new EventDateTime().setDateTime(end));
 
-
-
             String[] participantEmails = participants.split(",");
             EventAttendee[] attendees = new EventAttendee[participantEmails.length];
             for (int i = 0; i < participantEmails.length; i++) {
                 attendees[i] = new EventAttendee().setEmail(participantEmails[i].trim());
             }
             event.setAttendees(Arrays.asList(attendees));
-
-            Event createdEvent = eventDAO.createEvent(event, "primary");
-
+            eventDAO.createEvent(event, "primary");
             response.sendRedirect("Gevent.jsp");
-
         } catch (Exception e) {
             e.printStackTrace();
             response.getWriter().write("Error creating the event.");

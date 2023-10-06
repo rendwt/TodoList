@@ -1,4 +1,4 @@
-package com.task.todolist.controller;
+package com.task.todolist.webcontroller;
 
 import com.task.todolist.model.CompletedGroceryListDAO;
 import com.task.todolist.model.GroceryList;
