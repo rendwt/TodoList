@@ -7,14 +7,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
 
 @WebServlet(value = "/DbConnectionServlet",loadOnStartup = 1)
 public class DbConnection extends HttpServlet {
     private static final String DB_PROPERTIES_PATH = "/WEB-INF/db.properties";
-    private BasicDataSource connectionPool;
     public void init() throws ServletException {
         ServletContext context = getServletContext();
         String dbPropertiesPath = context.getRealPath(DB_PROPERTIES_PATH);
@@ -32,7 +30,7 @@ public class DbConnection extends HttpServlet {
                 throw new ServletException("One or more required properties are missing in db.properties.");
             }
 
-            connectionPool = new BasicDataSource();
+            BasicDataSource connectionPool = new BasicDataSource();
             connectionPool.setDriverClassName(jdbcDriver);
             connectionPool.setUrl(jdbcUrl);
             connectionPool.setUsername(jdbcUsername);
