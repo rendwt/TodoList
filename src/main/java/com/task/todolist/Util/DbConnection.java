@@ -1,4 +1,4 @@
-package com.task.todolist.dbUtil;
+package com.task.todolist.Util;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 

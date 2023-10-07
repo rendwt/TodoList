@@ -1,5 +1,6 @@
 package com.task.todolist.model;
 
+import com.task.todolist.Util.PasswordUtil;
 import com.task.todolist.model.User;
 import org.apache.commons.dbcp2.BasicDataSource;
 
@@ -14,16 +15,17 @@ public class UsersDAO {
         this.dbConnection = dbConnection;
     }
 
-    public int createUser(String username, String password, String role){
+    public int createUser(String username, String password, String salt, String role){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         int rowCount =0;
         try {
             connection = dbConnection.getConnection();
-            preparedStatement=connection.prepareStatement("insert into users(username, password, role) values(?,?,?)");
+            preparedStatement=connection.prepareStatement("insert into users(username, password, salt, role) values(?,?,?,?)");
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
-            preparedStatement.setString(3, role);
+            preparedStatement.setString(3, salt);
+            preparedStatement.setString(4, role);
             rowCount=preparedStatement.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
@@ -33,24 +35,28 @@ public class UsersDAO {
         return rowCount;
     }
 
-    public User checkUser(String username, String password){
+    public User checkUser(String username, String inputPassword){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
+        ResultSet resultSet;
         User user = null;
-        int rowCount =0;
         try {
             connection = dbConnection.getConnection();
-            preparedStatement=connection.prepareStatement("select * from users where username = ? and password = ?");
+            preparedStatement=connection.prepareStatement("select * from users where username = ?");
             preparedStatement.setString(1, username);
-            preparedStatement.setString(2, password);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                user = new User();
-                user.setId(resultSet.getInt("id"));
-                user.setUsername(resultSet.getString("username"));
-                user.setPassword(resultSet.getString("password"));
-                user.setRole(resultSet.getString("role"));
+                String storedPasswordHash = resultSet.getString("password");
+                String salt = resultSet.getString("salt");
+                String hashedInputPassword = PasswordUtil.hashPassword(inputPassword, salt);
+                if (storedPasswordHash.equals(hashedInputPassword)) {
+                    user = new User();
+                    user.setId(resultSet.getInt("id"));
+                    user.setUsername(resultSet.getString("username"));
+                    user.setPassword(resultSet.getString("password"));
+                    user.setSalt(resultSet.getString("salt"));
+                    user.setRole(resultSet.getString("role"));
+                }
             }
         }catch (SQLException e){
             e.printStackTrace();
