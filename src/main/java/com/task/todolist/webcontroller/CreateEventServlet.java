@@ -17,7 +17,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 @WebServlet("/createeventservlet")
-public class CreateCalendarEventServlet extends HttpServlet {
+public class CreateEventServlet extends HttpServlet {
     private GoogleCalendarService eventDAO;
 
     public void init() throws ServletException {

@@ -22,6 +22,7 @@ public class MyTelegramBot extends TelegramLongPollingBot {
     private Map<Long, CreateEventConversation> createEventConversationMap = new HashMap<>();
 
     public MyTelegramBot(ServletContext servletContext) throws TelegramApiException {
+        super("6576672471:AAGVuPWvyys3U7oqb7ILytkkeF9Nf1km5kw");
         this.botsApi = new TelegramBotsApi(DefaultBotSession.class);
         this.servletContext = servletContext;
     }
@@ -93,11 +94,11 @@ public class MyTelegramBot extends TelegramLongPollingBot {
     private void sendMenu(Long chatId) {
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
         markupInline.setKeyboard(Menu.createMenu());
-        SendMessage message = new SendMessage().builder()
-        .chatId(chatId.toString())
-        .text("Choose an option:")
-        .replyMarkup(markupInline)
-                .build();
+        SendMessage message = new SendMessage();
+        message.setChatId(chatId.toString());
+        message.setText("Choose an option:");
+        message.setReplyMarkup(markupInline);
+
         try {
             execute(message);
             System.out.println(message);
@@ -129,10 +130,5 @@ public class MyTelegramBot extends TelegramLongPollingBot {
     @Override
     public String getBotUsername() {
         return "CourseTodoList_bot";
-    }
-
-    @Override
-    public String getBotToken() {
-        return "6576672471:AAGVuPWvyys3U7oqb7ILytkkeF9Nf1km5kw";
     }
 }

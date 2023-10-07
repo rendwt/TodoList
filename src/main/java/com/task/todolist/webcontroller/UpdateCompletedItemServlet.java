@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/updatecompletedlistservlet")
-public class UpdateCompletedListServlet extends HttpServlet {
+public class UpdateCompletedItemServlet extends HttpServlet {
     private CompletedGroceryListDAO completedGroceryListDAO;
 
     public void init() throws ServletException {

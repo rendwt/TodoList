@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @WebServlet("/addlistitemservlet")
-public class AddListItemServlet extends HttpServlet{
+public class InputItemServlet extends HttpServlet{
     private GroceryListDAO groceryListDAO;
 
     public void init() throws ServletException {

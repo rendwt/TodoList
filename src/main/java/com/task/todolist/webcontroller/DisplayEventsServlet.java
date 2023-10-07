@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 @WebServlet("/geteventservlet")
-public class GetEventServlet extends HttpServlet {
+public class DisplayEventsServlet extends HttpServlet {
     private GoogleCalendarService eventDAO;
 
     public void init() throws ServletException {
