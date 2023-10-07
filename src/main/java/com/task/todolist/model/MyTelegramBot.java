@@ -44,50 +44,63 @@ public class MyTelegramBot extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         if (update.hasCallbackQuery()) {
-            String callbackData = update.getCallbackQuery().getData();
-            long chatId = update.getCallbackQuery().getMessage().getChatId();
-            if (callbackData.equals("Input Items")) {
-                InputItemConversation conversation = new InputItemConversation(servletContext);
-                inputItemConversationMap.put(chatId, conversation);
-                sendResponse(chatId, conversation.handleInput(update.getCallbackQuery().getMessage()));
-            }else if (callbackData.trim().equals("Display Items")) {
-                DisplayItemsConversation displayItemsConversation = new DisplayItemsConversation(servletContext);
-                sendTableResponse(displayItemsConversation.updateDisplay(chatId));
-            } else if (callbackData.equals("Create Event")) {
-                CreateEventConversation conversation = new CreateEventConversation();
-                createEventConversationMap.put(chatId, conversation);
-                sendResponse(chatId, "Please enter the event name:");
-            } else if (callbackData.equals("Display Events")) {
-                DisplayEventsConversation displayEventsConversation = new DisplayEventsConversation();
-                sendTableResponse(displayEventsConversation.displayEvents(chatId));
-            }
-        } else {
-            if (inputItemConversationMap.containsKey(update.getMessage().getChatId())) {
-                InputItemConversation conversation = inputItemConversationMap.get(update.getMessage().getChatId());
-                String response = conversation.handleInput(update.getMessage());
-                sendResponse(update.getMessage().getChatId(), response);
-                if (conversation.getState() == 1) {
-                    inputItemConversationMap.remove(update.getMessage().getChatId());
-                }
-            }else if(createEventConversationMap.containsKey(update.getMessage().getChatId())){
-                CreateEventConversation conversation = createEventConversationMap.get(update.getMessage().getChatId());
-                try {
-                    String response = conversation.handleInput(update.getMessage());
-                    sendResponse(update.getMessage().getChatId(), response);
-                    if (conversation.getState() == 1) {
-                        inputItemConversationMap.remove(update.getMessage().getChatId());
-                    }
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
+            handleCallbackQuery(update);
+        } else if (update.hasMessage() && update.getMessage().hasText()) {
+            handleMessage(update);
         }
+    }
+
+    private void handleCallbackQuery(Update update) {
+        String callbackData = update.getCallbackQuery().getData();
+        long chatId = update.getCallbackQuery().getMessage().getChatId();
+        if (callbackData.equals("Input Items")) {
+            InputItemConversation conversation = new InputItemConversation(servletContext);
+            inputItemConversationMap.put(chatId, conversation);
+            sendResponse(chatId, conversation.handleInput(update.getCallbackQuery().getMessage()));
+        } else if (callbackData.trim().equals("Display Items")) {
+            sendTableResponse(new DisplayItemsConversation(servletContext).updateDisplay(chatId));
+        } else if (callbackData.equals("Create Event")) {
+            CreateEventConversation conversation = new CreateEventConversation();
+            createEventConversationMap.put(chatId, conversation);
+            sendResponse(chatId, "Please enter the event name:");
+        } else if (callbackData.equals("Display Events")) {
+            sendTableResponse(new DisplayEventsConversation().displayEvents(chatId));
+        }
+        sendMenu(chatId);
+    }
+
+    private void handleMessage(Update update) {
         Message message = update.getMessage();
-        if (message != null && message.hasText()) {
-            String text = message.getText();
-            if (text.equals("/start")) {
-                sendMenu(update.getMessage().getChatId());
+        long chatId = message.getChatId();
+        String text = message.getText();
+        if (text.equals("/start")) {
+            sendMenu(chatId);
+        } else if (inputItemConversationMap.containsKey(chatId)) {
+            handleInputItemConversation(update, chatId);
+        } else if (createEventConversationMap.containsKey(chatId)) {
+            handleCreateEventConversation(update, chatId);
+        }
+    }
+
+    private void handleInputItemConversation(Update update, long chatId) {
+        InputItemConversation conversation = inputItemConversationMap.get(chatId);
+        String response = conversation.handleInput(update.getMessage());
+        sendResponse(chatId, response);
+        if (conversation.getState() == 1) {
+            inputItemConversationMap.remove(chatId);
+        }
+    }
+
+    private void handleCreateEventConversation(Update update, long chatId) {
+        CreateEventConversation conversation = createEventConversationMap.get(chatId);
+        try {
+            String response = conversation.handleInput(update.getMessage());
+            sendResponse(chatId, response);
+            if (conversation.getState() == 1) {
+                inputItemConversationMap.remove(chatId);
             }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -98,7 +111,6 @@ public class MyTelegramBot extends TelegramLongPollingBot {
         message.setChatId(chatId.toString());
         message.setText("Choose an option:");
         message.setReplyMarkup(markupInline);
-
         try {
             execute(message);
         } catch (TelegramApiException e) {
