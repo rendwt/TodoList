@@ -24,8 +24,7 @@ public class DisplayCompletedItemsServlet extends HttpServlet {
 
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response){
         try {
             List<GroceryList> completedgroceryList = completedGroceryListDAO.getList();
             response.setContentType("text/html");

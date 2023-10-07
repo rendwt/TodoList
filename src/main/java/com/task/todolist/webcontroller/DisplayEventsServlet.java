@@ -23,7 +23,7 @@ public class DisplayEventsServlet extends HttpServlet {
         eventDAO = new GoogleCalendarService();
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             List<Event> events = eventDAO.getEvents("primary");
             StringBuilder html = new StringBuilder();
@@ -50,7 +50,7 @@ public class DisplayEventsServlet extends HttpServlet {
                 response.setContentType("text/html");
             }
                 PrintWriter out = response.getWriter();
-                out.println(html.toString());
+                out.println(html);
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MyTelegramBot extends TelegramLongPollingBot {
-    private TelegramBotsApi botsApi;
+    private final TelegramBotsApi botsApi;
     private ServletContext servletContext;
     private volatile boolean isRunning = false;
     private Map<Long, InputItemConversation> inputItemConversationMap = new HashMap<>();
@@ -101,7 +101,6 @@ public class MyTelegramBot extends TelegramLongPollingBot {
 
         try {
             execute(message);
-            System.out.println(message);
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }

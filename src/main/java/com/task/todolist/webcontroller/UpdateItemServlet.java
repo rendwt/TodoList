@@ -22,8 +22,7 @@ public class UpdateItemServlet extends HttpServlet {
 
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response){
         int id = Integer.parseInt(request.getParameter("id"));
         String status = request.getParameter("status");
         if(status.equals("done")){

@@ -24,7 +24,7 @@ public class CreateEventServlet extends HttpServlet {
         eventDAO = new GoogleCalendarService();
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             String summary = request.getParameter("summary");
             String description = request.getParameter("description");
