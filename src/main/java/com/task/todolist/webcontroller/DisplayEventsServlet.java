@@ -3,7 +3,6 @@ package com.task.todolist.webcontroller;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
 import com.task.todolist.model.GoogleCalendarService;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,7 +30,6 @@ public class DisplayEventsServlet extends HttpServlet {
                 html.append("<p>No events to show</p>");
             }else {
                 html.append("<html><head><title>Calendar Events</title></head><body>");
-                html.append("<h1>Calendar Events</h1>");
                 html.append("<table border='1'>");
                 html.append("<tr><th>Event Name</th><th>Event Summary</th><th>Start Date</th><th>End Date</th></tr>");
 

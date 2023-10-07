@@ -16,7 +16,6 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.*;
 import com.google.api.services.calendar.CalendarScopes;
-
 import java.io.IOException;
 import java.util.Collections;
 
@@ -24,7 +23,7 @@ public class GoogleCalendarService {
     private Calendar calendarService;
     private static final String APPLICATION_NAME = "TodoList";
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
-    private static final String TOKENS_DIRECTORY_PATH = "tkns";
+    private static final String TOKENS_DIRECTORY_PATH = "token";
     private static final List<String> SCOPES = Collections.singletonList(CalendarScopes.CALENDAR);
     private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
 
@@ -58,11 +57,11 @@ public class GoogleCalendarService {
         }
         try {
             Credential credential = getCredentials(HTTP_TRANSPORT);
-            credential = refreshExpiredToken(credential);
             calendarService =
-                    new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
+                    new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
                             .setApplicationName(APPLICATION_NAME)
                             .build();
+            credential = refreshExpiredToken(credential);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

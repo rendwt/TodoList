@@ -5,6 +5,7 @@
     <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
+    <div class="menu-container">
     <h2>Enter Item Information</h2>
     <form action="addlistitemservlet" method="post">
         <label for="itemName">Item Name:</label>
@@ -18,6 +19,7 @@
 
         <input type="submit" value="Submit">
     </form>
-    <a href="index.jsp" class="button-link">Back to Home Page</a>
+    <a href="index.jsp">Back to Home Page</a>
+    </div>
 </body>
 </html>

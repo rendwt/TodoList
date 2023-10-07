@@ -39,7 +39,7 @@ public class AuthFilter implements Filter {
         }
     }
     private boolean isAllowedPage(String requestedURI) {
-        String[] allowedPages = { "/login.jsp","login", "/register.jsp","register", "/registration-error.jsp"};
+        String[] allowedPages = { "/login.jsp","login","login.css","/register.jsp","register", "/registration-error.jsp"};
         for (String page : allowedPages) {
             if (requestedURI.endsWith(page)) {
                 return true;

@@ -1,9 +1,7 @@
 package com.task.todolist.model;
 
 import com.task.todolist.Util.PasswordUtil;
-import com.task.todolist.model.User;
 import org.apache.commons.dbcp2.BasicDataSource;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -68,9 +66,8 @@ public class UsersDAO {
     public User getUserByUsername(String username){
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
+        ResultSet resultSet;
         User user = null;
-        int rowCount =0;
         try {
             connection = dbConnection.getConnection();
             preparedStatement=connection.prepareStatement("select * from users where username = ?");

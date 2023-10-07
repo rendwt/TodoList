@@ -3,7 +3,6 @@ package com.task.todolist.webcontroller;
 import com.task.todolist.model.GroceryListDAO;
 import com.task.todolist.model.GroceryList;
 import org.apache.commons.dbcp2.BasicDataSource;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,6 +29,7 @@ public class DisplayItemsServlet extends HttpServlet {
             List<GroceryList> groceryList = groceryListDAO.getList();
             response.setContentType("text/html");
             PrintWriter out = response.getWriter();
+            out.println("<h2>To-Do-List</h2>");
             out.println("<table border='1'>");
             if(groceryList.isEmpty())
                 out.println("<p>The list is empty</p>");
@@ -60,7 +60,7 @@ public class DisplayItemsServlet extends HttpServlet {
                     out.println("<form method='post' action='editlistitemservlet'>");
                     out.println("<input type='hidden' name='itemId' value='" + listItemId + "'>");
                     out.println("Name: <input type='text' name='itemName' value='" + listItemName + "'><br>");
-                    out.println("Qty: <input type='text' name='itemQty' value='" + listitemQty + "'><br>");
+                    out.println("Qty: <input type='number' name='itemQty' value='" + listitemQty + "'><br>");
                     out.println("Unit: <input type='text' name='itemUnit' value='" + listitemUnit + "'><br>");
                     out.println("<input type='submit' value='Save'>");
                     out.println("</form>");

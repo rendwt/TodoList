@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
-
 public class CreateEventConversation {
     private GoogleCalendarService eventDAO;
     private static final int STATE_INITIAL = 1;
@@ -27,7 +26,7 @@ public class CreateEventConversation {
     LocalDateTime endDateTime;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
-    public CreateEventConversation(Long chatId) {
+    public CreateEventConversation() {
         this.state = STATE_INITIAL;
         eventDAO = new GoogleCalendarService();
     }

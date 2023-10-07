@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
 import static com.task.todolist.Util.PasswordUtil.generateRandomSalt;
 import static com.task.todolist.Util.PasswordUtil.hashPassword;
 
@@ -24,7 +23,7 @@ public class RegistrationServlet extends HttpServlet {
         usersDAO = new UsersDAO(connectionPool);
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String role = request.getParameter("role");

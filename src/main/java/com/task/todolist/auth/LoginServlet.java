@@ -1,10 +1,8 @@
 package com.task.todolist.auth;
 
-import com.task.todolist.Util.PasswordUtil;
 import com.task.todolist.model.UsersDAO;
 import com.task.todolist.model.User;
 import org.apache.commons.dbcp2.BasicDataSource;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,8 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-
-import static com.task.todolist.Util.PasswordUtil.hashPassword;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
@@ -27,7 +23,7 @@ public class LoginServlet extends HttpServlet {
         usersDAO = new UsersDAO(connectionPool);
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         HttpSession session = request.getSession();

@@ -1,8 +1,6 @@
 package com.task.todolist.model;
 
-import com.task.todolist.model.GroceryList;
 import org.apache.commons.dbcp2.BasicDataSource;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -137,7 +135,7 @@ public class GroceryListDAO {
 
         try {
             connection = dbConnection.getConnection();
-            String query = "SELECT itemid, itemname, qty, unit, status FROM grocerylist";
+            String query = "SELECT itemid, itemname, qty, unit, status FROM grocerylist order by itemid asc";
             preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
 
