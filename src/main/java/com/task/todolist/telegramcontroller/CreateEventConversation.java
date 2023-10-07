@@ -26,7 +26,7 @@ public class CreateEventConversation {
     LocalDateTime endDateTime;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
-    public CreateEventConversation(Long chatId) {
+    public CreateEventConversation() {
         this.state = STATE_INITIAL;
         eventDAO = new GoogleCalendarService();
     }

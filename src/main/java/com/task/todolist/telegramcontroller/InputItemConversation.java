@@ -13,8 +13,6 @@ public class InputItemConversation {
     private int state;
     private String itemName;
     private int quantity;
-    private String unitOfMeasurement;
-    private String status = "to be completed";
     private GroceryListDAO groceryListDAO;
 
     public InputItemConversation(ServletContext servletContext) {
@@ -46,9 +44,9 @@ public class InputItemConversation {
                     return "Invalid input. Please enter a valid quantity (integer):";
                 }
             case STATE_UNIT_OF_MEASUREMENT:
-                unitOfMeasurement = text;
+                String unitOfMeasurement = text;
                 state = STATE_INITIAL;
-                groceryListDAO.addListItem(itemName, quantity, unitOfMeasurement, status);
+                groceryListDAO.addListItem(itemName, quantity, unitOfMeasurement, "to be completed");
                 return "Added Item " + itemName + " " + quantity + " " + unitOfMeasurement + " to list";
             default:
                 return "Invalid input.";

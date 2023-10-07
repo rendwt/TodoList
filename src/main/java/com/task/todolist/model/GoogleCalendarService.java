@@ -59,7 +59,7 @@ public class GoogleCalendarService {
             Credential credential = getCredentials(HTTP_TRANSPORT);
             credential = refreshExpiredToken(credential);
             calendarService =
-                    new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
+                    new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
                             .setApplicationName(APPLICATION_NAME)
                             .build();
         } catch (IOException e) {

@@ -54,7 +54,7 @@ public class MyTelegramBot extends TelegramLongPollingBot {
                 DisplayItemsConversation displayItemsConversation = new DisplayItemsConversation(servletContext);
                 sendTableResponse(displayItemsConversation.updateDisplay(chatId));
             } else if (callbackData.equals("Create Event")) {
-                CreateEventConversation conversation = new CreateEventConversation(chatId);
+                CreateEventConversation conversation = new CreateEventConversation();
                 createEventConversationMap.put(chatId, conversation);
                 sendResponse(chatId, "Please enter the event name:");
             } else if (callbackData.equals("Display Events")) {
