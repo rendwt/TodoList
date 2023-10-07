@@ -18,6 +18,9 @@ public class AuthFilter implements Filter {
 
         String requestedURI = httpRequest.getRequestURI();
         if (isAllowedPage(requestedURI)) {
+            httpResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+            httpResponse.setHeader("Pragma", "no-cache");
+            httpResponse.setDateHeader("Expires", 0);
             chain.doFilter(request, response);
             return;
         }
@@ -34,6 +37,9 @@ public class AuthFilter implements Filter {
                     httpResponse.sendRedirect(httpRequest.getContextPath() + "/unauthorized.jsp");
                 }
             } else {
+                httpResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpResponse.setHeader("Pragma", "no-cache");
+                httpResponse.setDateHeader("Expires", 0);
                 chain.doFilter(request, response);
             }
         }
