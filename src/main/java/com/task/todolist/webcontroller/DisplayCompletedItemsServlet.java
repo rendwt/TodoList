@@ -29,6 +29,7 @@ public class DisplayCompletedItemsServlet extends HttpServlet {
             List<GroceryList> completedgroceryList = completedGroceryListDAO.getList();
             response.setContentType("text/html");
             PrintWriter out = response.getWriter();
+            out.println("<h2>Completed List</h2>");
             out.println("<table border='1'>");
             if(completedgroceryList.isEmpty())
                 out.println("<p>The completed list is empty</p>");

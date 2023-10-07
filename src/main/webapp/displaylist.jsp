@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>List menu</title>
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="stylesheet" type="text/css" href="css/displaylist.css">
 </head>
 <body>
     <div class="container">
@@ -11,8 +11,8 @@
         </div>
         <div id="completedlist">
         </div>
+        <a href="index.jsp">Back to Home Page</a>
     </div>
-    <a href="index.jsp" class="button-link">Back to Home Page</a>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="scripts/displaylist.js"></script>
 </body>

@@ -135,7 +135,7 @@ public class GroceryListDAO {
 
         try {
             connection = dbConnection.getConnection();
-            String query = "SELECT itemid, itemname, qty, unit, status FROM grocerylist";
+            String query = "SELECT itemid, itemname, qty, unit, status FROM grocerylist order by itemid asc";
             preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
 
