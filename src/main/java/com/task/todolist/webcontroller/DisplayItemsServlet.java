@@ -3,7 +3,6 @@ package com.task.todolist.webcontroller;
 import com.task.todolist.model.GroceryListDAO;
 import com.task.todolist.model.GroceryList;
 import org.apache.commons.dbcp2.BasicDataSource;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

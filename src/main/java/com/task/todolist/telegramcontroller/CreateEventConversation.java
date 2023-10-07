@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
-
 public class CreateEventConversation {
     private GoogleCalendarService eventDAO;
     private static final int STATE_INITIAL = 1;

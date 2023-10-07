@@ -31,6 +31,6 @@
     <div id="events">
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="Gevent.js"></script>
+    <script src="scripts/Gevent.js"></script>
 </body>
 </html>

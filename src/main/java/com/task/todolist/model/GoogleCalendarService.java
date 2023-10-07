@@ -16,7 +16,6 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.*;
 import com.google.api.services.calendar.CalendarScopes;
-
 import java.io.IOException;
 import java.util.Collections;
 

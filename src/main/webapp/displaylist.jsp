@@ -14,6 +14,6 @@
     </div>
     <a href="index.jsp" class="button-link">Back to Home Page</a>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="displaylist.js"></script>
+    <script src="scripts/displaylist.js"></script>
 </body>
 </html>

@@ -3,7 +3,6 @@ package com.task.todolist.webcontroller;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
 import com.task.todolist.model.GoogleCalendarService;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

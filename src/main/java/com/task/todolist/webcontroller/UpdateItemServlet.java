@@ -1,6 +1,5 @@
 package com.task.todolist.webcontroller;
 
-
 import com.task.todolist.model.GroceryListDAO;
 import org.apache.commons.dbcp2.BasicDataSource;
 import javax.servlet.ServletContext;
@@ -18,7 +17,6 @@ public class UpdateItemServlet extends HttpServlet {
         ServletContext context = getServletContext();
         BasicDataSource connectionPool = (BasicDataSource) context.getAttribute("connectionPool");
         groceryListDAO = new GroceryListDAO(connectionPool);
-
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response){

@@ -4,7 +4,6 @@ import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
 import com.task.todolist.model.GoogleCalendarService;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;

@@ -3,7 +3,6 @@ package com.task.todolist.telegramcontroller;
 import com.task.todolist.model.GroceryListDAO;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.telegram.telegrambots.meta.api.objects.Message;
-
 import javax.servlet.ServletContext;
 
 public class InputItemConversation {

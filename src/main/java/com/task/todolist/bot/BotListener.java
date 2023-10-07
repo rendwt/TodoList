@@ -6,7 +6,6 @@ import javax.servlet.ServletContextListener;
 
 public class BotListener implements ServletContextListener {
     private BotThread botThread;
-
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         try {
