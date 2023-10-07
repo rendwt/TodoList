@@ -25,8 +25,7 @@ public class DisplayItemsServlet extends HttpServlet {
 
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response){
         try {
             List<GroceryList> groceryList = groceryListDAO.getList();
             response.setContentType("text/html");

@@ -1,5 +1,6 @@
 package com.task.todolist.auth;
 
+import com.task.todolist.Util.PasswordUtil;
 import com.task.todolist.model.UsersDAO;
 import com.task.todolist.model.User;
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -13,10 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import static com.task.todolist.Util.PasswordUtil.hashPassword;
+
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
     private UsersDAO usersDAO;
-    private User existingUser;
+    private User user;
+
     public void init() throws ServletException {
         ServletContext context = getServletContext();
         BasicDataSource connectionPool = (BasicDataSource) context.getAttribute("connectionPool");
@@ -26,22 +30,20 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-
+        HttpSession session = request.getSession();
         if (!userExists(username,password)) {
-            HttpSession session = request.getSession();
             session.setAttribute("loginError", "Invalid username or password");
             response.sendRedirect(request.getContextPath() + "/login.jsp");
         }else {
-            HttpSession session = request.getSession();
-            session.setAttribute("user",existingUser);
-            session.setAttribute("userRole", existingUser.getRole());
-            session.setAttribute("username", existingUser.getUsername());
+            session.setAttribute("user",user);
+            session.setAttribute("userRole", user.getRole());
+            session.setAttribute("username", user.getUsername());
             response.sendRedirect("index.jsp");
         }
     }
 
     private boolean userExists(String username, String password) {
-        existingUser = usersDAO.checkUser(username, password);
-        return existingUser != null;
+        user = usersDAO.checkUser(username, password);
+        return user != null;
     }
 }

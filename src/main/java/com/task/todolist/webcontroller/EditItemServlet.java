@@ -21,7 +21,7 @@ public class EditItemServlet extends HttpServlet {
         groceryListDAO = new GroceryListDAO(connectionPool);
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int itemId = Integer.parseInt(request.getParameter("itemId"));
         String itemName = request.getParameter("itemName");
         int itemQty = Integer.parseInt(request.getParameter("itemQty"));
