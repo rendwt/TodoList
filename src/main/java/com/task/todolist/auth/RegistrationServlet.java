@@ -24,7 +24,7 @@ public class RegistrationServlet extends HttpServlet {
         usersDAO = new UsersDAO(connectionPool);
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String role = request.getParameter("role");
