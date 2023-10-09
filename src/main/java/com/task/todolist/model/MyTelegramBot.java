@@ -7,11 +7,13 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import javax.servlet.ServletContext;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MyTelegramBot extends TelegramLongPollingBot {
@@ -20,6 +22,7 @@ public class MyTelegramBot extends TelegramLongPollingBot {
     private volatile boolean isRunning = false;
     private Map<Long, InputItemConversation> inputItemConversationMap = new HashMap<>();
     private Map<Long, CreateEventConversation> createEventConversationMap = new HashMap<>();
+    private Map<Long, UpdateItemConversation> updateItemConversationMap = new HashMap<>();
 
     public MyTelegramBot(ServletContext servletContext) throws TelegramApiException {
         super("6576672471:AAGVuPWvyys3U7oqb7ILytkkeF9Nf1km5kw");
@@ -58,27 +61,44 @@ public class MyTelegramBot extends TelegramLongPollingBot {
             inputItemConversationMap.put(chatId, conversation);
             sendResponse(chatId, conversation.handleInput(update.getCallbackQuery().getMessage()));
         } else if (callbackData.trim().equals("Display Items")) {
-            sendTableResponse(new DisplayItemsConversation(servletContext).updateDisplay(chatId));
+            DisplayItemsConversation conversation = new DisplayItemsConversation(servletContext);
+            sendTableResponse(conversation.updateDisplay(chatId));
+            sendEventMenu(chatId);
         } else if (callbackData.equals("Create Event")) {
             CreateEventConversation conversation = new CreateEventConversation();
             createEventConversationMap.put(chatId, conversation);
             sendResponse(chatId, "Please enter the event name:");
         } else if (callbackData.equals("Display Events")) {
             sendTableResponse(new DisplayEventsConversation().displayEvents(chatId));
+        }else if (callbackData.equals("Update item") || callbackData.equals("Delete item")){
+            UpdateItemConversation conversation = new UpdateItemConversation(servletContext);
+            updateItemConversationMap.put(chatId, conversation);
+            conversation.setCallBackData(callbackData);
+            sendResponse(chatId, conversation.handleInput(update.getCallbackQuery().getMessage()));
         }
-        sendMenu(chatId);
     }
 
     private void handleMessage(Update update) {
         Message message = update.getMessage();
         long chatId = message.getChatId();
         String text = message.getText();
-        if (text.equals("/start")) {
+        if (text.equals("/start")||text.equals("/menu")) {
             sendMenu(chatId);
         } else if (inputItemConversationMap.containsKey(chatId)) {
             handleInputItemConversation(update, chatId);
         } else if (createEventConversationMap.containsKey(chatId)) {
             handleCreateEventConversation(update, chatId);
+        }else if (updateItemConversationMap.containsKey(chatId)){
+            handleUpdateItemConversation(update, chatId);
+        }
+    }
+
+    private void handleUpdateItemConversation(Update update, long chatId) {
+        UpdateItemConversation conversation = updateItemConversationMap.get(chatId);
+        String response = conversation.handleInput(update.getMessage());
+        sendResponse(chatId, response);
+        if (conversation.getState() == 1) {
+            updateItemConversationMap.remove(chatId);
         }
     }
 
@@ -101,6 +121,20 @@ public class MyTelegramBot extends TelegramLongPollingBot {
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private void sendEventMenu(Long chatId) {
+        InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
+        markupInline.setKeyboard(EventMenu.createEventMenu());
+        SendMessage message = new SendMessage();
+        message.setChatId(chatId.toString());
+        message.setText("Choose an event option:");
+        message.setReplyMarkup(markupInline);
+        try {
+            execute(message);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
         }
     }
 
