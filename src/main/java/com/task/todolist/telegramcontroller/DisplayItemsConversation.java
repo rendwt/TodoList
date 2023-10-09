@@ -4,22 +4,19 @@ import com.task.todolist.model.CompletedGroceryListDAO;
 import com.task.todolist.model.GroceryList;
 import com.task.todolist.model.GroceryListDAO;
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.checkerframework.checker.units.qual.C;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import javax.servlet.ServletContext;
 import java.util.List;
 
 public class DisplayItemsConversation {
-    private GroceryListDAO groceryListDAO;
-    private CompletedGroceryListDAO completedGroceryListDAO;
     private static List<GroceryList> groceryList;
     private static List<GroceryList> completedGroceryList;
     int i = 1;
 
     public DisplayItemsConversation(ServletContext servletContext) {
         BasicDataSource connectionPool = (BasicDataSource) servletContext.getAttribute("connectionPool");
-        groceryListDAO = new GroceryListDAO(connectionPool);
-        completedGroceryListDAO = new CompletedGroceryListDAO(connectionPool);
+        GroceryListDAO groceryListDAO = new GroceryListDAO(connectionPool);
+        CompletedGroceryListDAO completedGroceryListDAO = new CompletedGroceryListDAO(connectionPool);
         groceryList = groceryListDAO.getList();
         completedGroceryList = completedGroceryListDAO.getList();
     }

@@ -44,10 +44,9 @@ public class InputItemConversation {
                     return "Invalid input. Please enter a valid quantity (integer):";
                 }
             case STATE_UNIT_OF_MEASUREMENT:
-                String unitOfMeasurement = text;
                 state = STATE_INITIAL;
-                groceryListDAO.addListItem(itemName, quantity, unitOfMeasurement, "to be completed");
-                return "Added Item " + itemName + " " + quantity + " " + unitOfMeasurement + " to list /menu to view menu";
+                groceryListDAO.addListItem(itemName, quantity, text, "to be completed");
+                return "Added Item " + itemName + " " + quantity + " " + text + " to list /menu to view menu";
             default:
                 return "Invalid input.";
         }
