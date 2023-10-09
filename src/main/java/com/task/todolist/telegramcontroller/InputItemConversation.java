@@ -47,7 +47,7 @@ public class InputItemConversation {
                 String unitOfMeasurement = text;
                 state = STATE_INITIAL;
                 groceryListDAO.addListItem(itemName, quantity, unitOfMeasurement, "to be completed");
-                return "Added Item " + itemName + " " + quantity + " " + unitOfMeasurement + " to list";
+                return "Added Item " + itemName + " " + quantity + " " + unitOfMeasurement + " to list /menu to view menu";
             default:
                 return "Invalid input.";
         }
