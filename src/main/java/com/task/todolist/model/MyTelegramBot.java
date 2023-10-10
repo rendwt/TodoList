@@ -19,7 +19,7 @@ public class MyTelegramBot extends TelegramLongPollingBot {
     private ServletContext servletContext;
     private volatile boolean isRunning = false;
     private Map<Long, InputItemConversation> inputItemConversationMap = new HashMap<>();
-    private Map<Long, CreateEventConversation> createEventConversationMap = new HashMap<>();
+    private Map<Long, InputEventConversation> createEventConversationMap = new HashMap<>();
     private Map<Long, UpdateItemConversation> updateItemConversationMap = new HashMap<>();
 
     public MyTelegramBot(ServletContext servletContext) throws TelegramApiException {
@@ -63,7 +63,7 @@ public class MyTelegramBot extends TelegramLongPollingBot {
             sendTableResponse(conversation.updateDisplay(chatId));
             sendEventMenu(chatId);
         } else if (callbackData.equals("Create Event")) {
-            CreateEventConversation conversation = new CreateEventConversation();
+            InputEventConversation conversation = new InputEventConversation();
             createEventConversationMap.put(chatId, conversation);
             sendResponse(chatId, "Please enter the event name:");
         } else if (callbackData.equals("Display Events")) {
@@ -110,7 +110,7 @@ public class MyTelegramBot extends TelegramLongPollingBot {
     }
 
     private void handleCreateEventConversation(Update update, long chatId) {
-        CreateEventConversation conversation = createEventConversationMap.get(chatId);
+        InputEventConversation conversation = createEventConversationMap.get(chatId);
         try {
             String response = conversation.handleInput(update.getMessage());
             sendResponse(chatId, response);

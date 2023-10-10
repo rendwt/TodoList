@@ -11,7 +11,6 @@ import java.util.List;
 public class DisplayItemsConversation {
     private static List<GroceryList> groceryList;
     private static List<GroceryList> completedGroceryList;
-    int i = 1;
 
     public DisplayItemsConversation(ServletContext servletContext) {
         BasicDataSource connectionPool = (BasicDataSource) servletContext.getAttribute("connectionPool");
@@ -45,6 +44,7 @@ public class DisplayItemsConversation {
     }
 
     public StringBuilder CreateMessage(List<GroceryList> list, StringBuilder messageText){
+        int i = 1;
         for (GroceryList listItem : list) {
             listItem.setMenuid(i);
             String itemName = listItem.getItemName();
