@@ -21,6 +21,12 @@ public class MyTelegramBot extends TelegramLongPollingBot {
     private Map<Long, InputItemConversation> inputItemConversationMap = new HashMap<>();
     private Map<Long, InputEventConversation> createEventConversationMap = new HashMap<>();
     private Map<Long, UpdateItemConversation> updateItemConversationMap = new HashMap<>();
+    private Map<Long, EditItemConversation> editItemConversationMap = new HashMap<>();
+
+    @Override
+    public String getBotUsername(){
+        return "CourseTodoList_bot";
+    }
 
     public MyTelegramBot(ServletContext servletContext) throws TelegramApiException {
         super("6576672471:AAGVuPWvyys3U7oqb7ILytkkeF9Nf1km5kw");
@@ -73,6 +79,10 @@ public class MyTelegramBot extends TelegramLongPollingBot {
             updateItemConversationMap.put(chatId, conversation);
             conversation.setCallBackData(callbackData);
             sendResponse(chatId, conversation.handleInput(update.getCallbackQuery().getMessage()));
+        }else if (callbackData.equals("Edit item")){
+            EditItemConversation conversation = new EditItemConversation(servletContext);
+            editItemConversationMap.put(chatId,conversation);
+            sendResponse(chatId, conversation.handleInput(update.getCallbackQuery().getMessage()));
         }
     }
 
@@ -82,16 +92,27 @@ public class MyTelegramBot extends TelegramLongPollingBot {
         String text = message.getText();
         if (text.equals("/start")||text.equals("/menu")) {
             sendMenu(chatId);
-        } else if (inputItemConversationMap.containsKey(chatId)) {
+        } else if (inputItemConversationMap.containsKey(chatId)){
             handleInputItemConversation(update, chatId);
-        } else if (createEventConversationMap.containsKey(chatId)) {
+        } else if (createEventConversationMap.containsKey(chatId)){
             handleCreateEventConversation(update, chatId);
         }else if (updateItemConversationMap.containsKey(chatId)){
             handleUpdateItemConversation(update, chatId);
+        }else if (editItemConversationMap.containsKey(chatId)){
+            handleEditItemConversation(update, chatId);
         }
     }
 
-    private void handleUpdateItemConversation(Update update, long chatId) {
+    private void handleEditItemConversation(Update update, long chatId){
+        EditItemConversation conversation = editItemConversationMap.get(chatId);
+        String response = conversation.handleInput(update.getMessage());
+        sendResponse(chatId, response);
+        if (conversation.getState() == 1) {
+            editItemConversationMap.remove(chatId);
+        }
+    }
+
+    private void handleUpdateItemConversation(Update update, long chatId){
         UpdateItemConversation conversation = updateItemConversationMap.get(chatId);
         String response = conversation.handleInput(update.getMessage());
         sendResponse(chatId, response);
@@ -100,7 +121,7 @@ public class MyTelegramBot extends TelegramLongPollingBot {
         }
     }
 
-    private void handleInputItemConversation(Update update, long chatId) {
+    private void handleInputItemConversation(Update update, long chatId){
         InputItemConversation conversation = inputItemConversationMap.get(chatId);
         String response = conversation.handleInput(update.getMessage());
         sendResponse(chatId, response);
@@ -109,7 +130,7 @@ public class MyTelegramBot extends TelegramLongPollingBot {
         }
     }
 
-    private void handleCreateEventConversation(Update update, long chatId) {
+    private void handleCreateEventConversation(Update update, long chatId){
         InputEventConversation conversation = createEventConversationMap.get(chatId);
         try {
             String response = conversation.handleInput(update.getMessage());
@@ -122,7 +143,7 @@ public class MyTelegramBot extends TelegramLongPollingBot {
         }
     }
 
-    private void sendEventMenu(Long chatId) {
+    private void sendEventMenu(Long chatId){
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
         markupInline.setKeyboard(EventMenu.createEventMenu());
         SendMessage message = new SendMessage();
@@ -136,7 +157,7 @@ public class MyTelegramBot extends TelegramLongPollingBot {
         }
     }
 
-    private void sendMenu(Long chatId) {
+    private void sendMenu(Long chatId){
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
         markupInline.setKeyboard(Menu.createMenu());
         SendMessage message = new SendMessage();
@@ -150,28 +171,23 @@ public class MyTelegramBot extends TelegramLongPollingBot {
         }
     }
 
-    public void sendResponse(Long chatId, String response) {
+    public void sendResponse(Long chatId, String response){
         SendMessage message = SendMessage.builder()
                 .chatId(chatId.toString())
                 .text(response)
                 .build();
         try {
             execute(message);
-        } catch (TelegramApiException e) {
+        } catch (TelegramApiException e){
             e.printStackTrace();
         }
     }
 
-    public void sendTableResponse(SendMessage message) {
+    public void sendTableResponse(SendMessage message){
         try {
             execute(message);
-        } catch (TelegramApiException e) {
+        } catch (TelegramApiException e){
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public String getBotUsername() {
-        return "CourseTodoList_bot";
     }
 }

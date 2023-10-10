@@ -44,7 +44,13 @@ public class UpdateItemConversation {
                 }catch (NumberFormatException e){
                     return "Invalid input. Please enter a valid quantity (integer):";
                 }
-                return "Enter item no to mark as done";
+                if (callBackData.equals("Update item")) {
+                    if (listSelection == 1)
+                        return "Enter item no to mark as done";
+                    else
+                        return "Enter item no to mark as to be completed";
+                }else
+                    return "Enter item no to delete from list";
             case 3:
                 try {
                     state = 4;
