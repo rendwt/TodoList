@@ -1,8 +1,7 @@
-package com.task.todolist.controller;
+package com.task.todolist.webcontroller;
 
-import com.task.todolist.dao.GroceryListDAO;
+import com.task.todolist.model.GroceryListDAO;
 import org.apache.commons.dbcp2.BasicDataSource;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,17 +11,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/editlistitemservlet")
-public class EditListItemServlet extends HttpServlet {
+public class EditItemServlet extends HttpServlet {
     private GroceryListDAO groceryListDAO;
 
     public void init() throws ServletException {
         ServletContext context = getServletContext();
         BasicDataSource connectionPool = (BasicDataSource) context.getAttribute("connectionPool");
         groceryListDAO = new GroceryListDAO(connectionPool);
-
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int itemId = Integer.parseInt(request.getParameter("itemId"));
         String itemName = request.getParameter("itemName");
         int itemQty = Integer.parseInt(request.getParameter("itemQty"));

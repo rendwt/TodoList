@@ -11,3 +11,14 @@ $(document).ready(function() {
         }
     });
 });
+$(document).ready(function () {
+    $("#createEventButton").click(function () {
+        $("#overlay").show();
+        $("#popup").show();
+    });
+
+    $("#closePopup").click(function () {
+        $("#overlay").hide();
+        $("#popup").hide();
+    });
+});

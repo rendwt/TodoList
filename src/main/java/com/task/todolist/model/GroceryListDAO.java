@@ -1,39 +1,81 @@
-package com.task.todolist.dao;
+package com.task.todolist.model;
 
-import com.task.todolist.model.GroceryList;
 import org.apache.commons.dbcp2.BasicDataSource;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CompletedGroceryListDAO {
+public class GroceryListDAO {
     private BasicDataSource dbConnection;
-    public CompletedGroceryListDAO(BasicDataSource dbConnection) {
+    public GroceryListDAO(BasicDataSource dbConnection) {
         this.dbConnection = dbConnection;
     }
 
+    public int addListItem(String itemName,int qty, String unit, String status) {
+        int listItemId = -1;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = dbConnection.getConnection();
+            statement = connection.prepareStatement("SELECT COALESCE(MAX(itemid), 0) + 1 FROM grocerylist");
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                listItemId = resultSet.getInt(1);
+            }
+
+            String query = "insert into grocerylist (itemid, itemname, qty, unit, status) values (?,?,?,?,?)";
+            statement = connection.prepareStatement(query);
+            statement.setInt(1,listItemId);
+            statement.setString(2,itemName);
+            statement.setInt(3,qty);
+            statement.setString(4,unit);
+            statement.setObject(5,status, Types.OTHER);
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            closeResources(connection,statement,null, resultSet);
+        }
+        return listItemId;
+    }
 
     public void removeListItem(int itemId){
         Connection connection = null;
         PreparedStatement preparedStatement=null;
         try {
             connection = dbConnection.getConnection();
-            String query ="delete from completedgrocerylist where itemid = ?";
+            String query ="delete from grocerylist where itemid = ?";
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setObject(1,itemId);
             preparedStatement.executeUpdate();
-            /*query ="ALTER SEQUENCE grocerylist_itemid_seq RESTART WITH (SELECT MAX(itemid) + 1 FROM grocerylist)";
-            preparedStatement = connection.prepareStatement(query);
-            preparedStatement.executeUpdate();*/
         }catch (SQLException e){
             e.printStackTrace();
         }finally {
-            closeResources(connection, preparedStatement,null, null);
+            closeResources(connection, preparedStatement, null, null);
         }
     }
 
-
+    public void editListItem(int itemId, String itemName, int qty, String unit){
+        Connection connection = null;
+        PreparedStatement preparedStatement=null;
+        try {
+            connection = dbConnection.getConnection();
+            String query ="update grocerylist SET itemname = ?, qty = ?, unit = ? WHERE itemid = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1,itemName);
+            preparedStatement.setInt(2,qty);
+            preparedStatement.setString(3,unit);
+            preparedStatement.setInt(4,itemId);
+            preparedStatement.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            closeResources(connection, preparedStatement, null, null);
+        }
+    }
     public void updateListItemStatus(int itemId, String status){
         Connection connection = null;
         PreparedStatement deleteStatement=null;
@@ -43,7 +85,7 @@ public class CompletedGroceryListDAO {
             connection = dbConnection.getConnection();
             connection.setAutoCommit(false);
 
-            String selectQuery = "SELECT * FROM completedgrocerylist WHERE itemid = ?";
+            String selectQuery = "SELECT * FROM grocerylist WHERE itemid = ?";
             deleteStatement = connection.prepareStatement(selectQuery);
             deleteStatement.setInt(1, itemId);
             resultSet = deleteStatement.executeQuery();
@@ -53,12 +95,12 @@ public class CompletedGroceryListDAO {
                 int qty = resultSet.getInt("qty");
                 String unit = resultSet.getString("unit");
 
-                String deleteQuery = "DELETE FROM completedgrocerylist WHERE itemid = ?";
+                String deleteQuery = "DELETE FROM grocerylist WHERE itemid = ?";
                 deleteStatement = connection.prepareStatement(deleteQuery);
                 deleteStatement.setInt(1, itemId);
-                deleteStatement.executeUpdate();
+                 deleteStatement.executeUpdate();
 
-                String insertQuery = "INSERT INTO grocerylist (itemid, itemname, qty, unit, status) VALUES (?, ?, ?, ?, ?)";
+                String insertQuery = "INSERT INTO completedgrocerylist (itemid, itemname, qty, unit, status) VALUES (?, ?, ?, ?, ?)";
                 insertStatement = connection.prepareStatement(insertQuery);
                 insertStatement.setInt(1, itemId);
                 insertStatement.setString(2, itemName);
@@ -93,7 +135,7 @@ public class CompletedGroceryListDAO {
 
         try {
             connection = dbConnection.getConnection();
-            String query = "SELECT itemid, itemname, qty, unit, status FROM completedgrocerylist";
+            String query = "SELECT itemid, itemname, qty, unit, status FROM grocerylist order by itemid asc";
             preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
 
@@ -129,4 +171,3 @@ public class CompletedGroceryListDAO {
         }
     }
 }
-

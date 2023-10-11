@@ -1,0 +1,156 @@
+body, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+body {
+    margin: 20px auto;
+    max-width: 800px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+}
+
+th {
+    background-color: #333;
+    color: #fff;
+    text-align: left;
+    padding: 10px;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+td {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+body {
+    margin-top: 20px;
+}
+
+hr {
+    border: 1px solid #ccc;
+}
+
+a {
+    display: block;
+    margin-top: 20px;
+    text-decoration: none;
+    color: #007BFF;
+}
+a:hover {
+    text-decoration: underline;
+}
+#overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+}
+
+#popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    z-index: 1001;
+}
+
+#closePopup {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: #333;
+}
+
+.createevents {
+    max-width: 400px;
+    background-color: #fff;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.createevents h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.createevents label {
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.createevents input[type="text"],
+.createevents input[type="datetime-local"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+.createevents input[type="datetime-local"] {
+    text-align: center;
+}
+
+.createevents input[type="submit"] {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.createevents input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.createevents a {
+    text-decoration: none;
+    color: #007BFF;
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+}
+
+.createevents a:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
+#createEventButton{
+    background-color: #007BFF;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+#createEventButton:hover {
+    background-color: #0056b3;
+}

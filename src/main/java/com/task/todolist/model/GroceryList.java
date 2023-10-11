@@ -1,11 +1,16 @@
 package com.task.todolist.model;
 
 public class GroceryList {
+    private int menuid;
     private int itemId;
     private String itemName;
     private int qty;
     private String unit;
     private String status;
+
+    public int getMenuid() {
+        return menuid;
+    }
 
     public int getItemId() {
         return itemId;
@@ -25,6 +30,10 @@ public class GroceryList {
 
     public String getStatus() {
         return status;
+    }
+
+    public void setMenuid(int menuid) {
+        this.menuid = menuid;
     }
 
     public void setItemId(int itemId) {
