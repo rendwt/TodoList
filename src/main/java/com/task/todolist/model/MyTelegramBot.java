@@ -74,6 +74,7 @@ public class MyTelegramBot extends TelegramLongPollingBot {
             sendResponse(chatId, "Please enter the event name:");
         } else if (callbackData.equals("Display Events")) {
             sendTableResponse(new DisplayEventsConversation().displayEvents(chatId));
+            sendCalendarEventMenu(chatId);
         }else if (callbackData.equals("Update item") || callbackData.equals("Delete item")){
             UpdateItemConversation conversation = new UpdateItemConversation(servletContext);
             updateItemConversationMap.put(chatId, conversation);
@@ -146,6 +147,20 @@ public class MyTelegramBot extends TelegramLongPollingBot {
     private void sendEventMenu(Long chatId){
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
         markupInline.setKeyboard(EventMenu.createEventMenu());
+        SendMessage message = new SendMessage();
+        message.setChatId(chatId.toString());
+        message.setText("Choose an event option:");
+        message.setReplyMarkup(markupInline);
+        try {
+            execute(message);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void sendCalendarEventMenu(Long chatId){
+        InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
+        markupInline.setKeyboard(CalendarEventMenu.createEventMenu());
         SendMessage message = new SendMessage();
         message.setChatId(chatId.toString());
         message.setText("Choose an event option:");
