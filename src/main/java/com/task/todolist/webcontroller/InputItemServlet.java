@@ -29,12 +29,7 @@ public class InputItemServlet extends HttpServlet{
         String status = "to be completed";
         groceryListDAO.addListItem(itemName, qty, unit, status);
         PrintWriter out = response.getWriter();
-        out.println("<head><link rel=\"stylesheet\" type=\"text/css\" href=\"css/styles.css\"></head>");
-        out.println("<div class=\"inter\">");
-        out.println("<h1>Item added to list</h1>");
-        out.println("<a href=\"inputitem.jsp\">Add another item</a>");
-        out.println("<a href=\"displaylist.jsp\">Display list</a>");
-        out.println("</div>");
+        response.sendRedirect("displaylist.jsp");
         out.close();
 
     }

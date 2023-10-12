@@ -59,20 +59,23 @@ public class MyTelegramBot extends TelegramLongPollingBot {
 
     private void handleCallbackQuery(Update update) {
         String callbackData = update.getCallbackQuery().getData();
+        System.out.println(callbackData);
         long chatId = update.getCallbackQuery().getMessage().getChatId();
-        if (callbackData.equals("Input Items")) {
+        if (callbackData.equals("Input Items")){
             InputItemConversation conversation = new InputItemConversation(servletContext);
             inputItemConversationMap.put(chatId, conversation);
             sendResponse(chatId, conversation.handleInput(update.getCallbackQuery().getMessage()));
-        } else if (callbackData.trim().equals("Display Items")) {
+        }else if (callbackData.trim().equals("Display Items")){
             DisplayItemsConversation conversation = new DisplayItemsConversation(servletContext);
             sendTableResponse(conversation.updateDisplay(chatId));
             sendEventMenu(chatId);
-        } else if (callbackData.equals("Create Event")) {
+        }else if (callbackData.equals("Create Event")){
             InputEventConversation conversation = new InputEventConversation();
+            System.out.println("entered");
             createEventConversationMap.put(chatId, conversation);
+            System.out.println("done");
             sendResponse(chatId, "Please enter the event name:");
-        } else if (callbackData.equals("Display Events")) {
+        }else if (callbackData.equals("Display Events")){
             sendTableResponse(new DisplayEventsConversation().displayEvents(chatId));
             sendCalendarEventMenu(chatId);
         }else if (callbackData.equals("Update item") || callbackData.equals("Delete item")){
@@ -87,15 +90,15 @@ public class MyTelegramBot extends TelegramLongPollingBot {
         }
     }
 
-    private void handleMessage(Update update) {
+    private void handleMessage(Update update){
         Message message = update.getMessage();
         long chatId = message.getChatId();
         String text = message.getText();
-        if (text.equals("/start")||text.equals("/menu")) {
+        if (text.equals("/start")||text.equals("/menu")){
             sendMenu(chatId);
-        } else if (inputItemConversationMap.containsKey(chatId)){
+        }else if (inputItemConversationMap.containsKey(chatId)){
             handleInputItemConversation(update, chatId);
-        } else if (createEventConversationMap.containsKey(chatId)){
+        }else if (createEventConversationMap.containsKey(chatId)){
             handleCreateEventConversation(update, chatId);
         }else if (updateItemConversationMap.containsKey(chatId)){
             handleUpdateItemConversation(update, chatId);
@@ -108,27 +111,24 @@ public class MyTelegramBot extends TelegramLongPollingBot {
         EditItemConversation conversation = editItemConversationMap.get(chatId);
         String response = conversation.handleInput(update.getMessage());
         sendResponse(chatId, response);
-        if (conversation.getState() == 1) {
+        if (conversation.getState() == 1)
             editItemConversationMap.remove(chatId);
-        }
     }
 
     private void handleUpdateItemConversation(Update update, long chatId){
         UpdateItemConversation conversation = updateItemConversationMap.get(chatId);
         String response = conversation.handleInput(update.getMessage());
         sendResponse(chatId, response);
-        if (conversation.getState() == 1) {
+        if (conversation.getState() == 1)
             updateItemConversationMap.remove(chatId);
-        }
     }
 
     private void handleInputItemConversation(Update update, long chatId){
         InputItemConversation conversation = inputItemConversationMap.get(chatId);
         String response = conversation.handleInput(update.getMessage());
         sendResponse(chatId, response);
-        if (conversation.getState() == 1) {
+        if (conversation.getState() == 1)
             inputItemConversationMap.remove(chatId);
-        }
     }
 
     private void handleCreateEventConversation(Update update, long chatId){
@@ -136,10 +136,9 @@ public class MyTelegramBot extends TelegramLongPollingBot {
         try {
             String response = conversation.handleInput(update.getMessage());
             sendResponse(chatId, response);
-            if (conversation.getState() == 1) {
+            if (conversation.getState() == 1)
                 inputItemConversationMap.remove(chatId);
-            }
-        } catch (IOException e) {
+        }catch (IOException e){
             throw new RuntimeException(e);
         }
     }
@@ -153,7 +152,7 @@ public class MyTelegramBot extends TelegramLongPollingBot {
         message.setReplyMarkup(markupInline);
         try {
             execute(message);
-        } catch (TelegramApiException e) {
+        } catch (TelegramApiException e){
             e.printStackTrace();
         }
     }
@@ -167,7 +166,7 @@ public class MyTelegramBot extends TelegramLongPollingBot {
         message.setReplyMarkup(markupInline);
         try {
             execute(message);
-        } catch (TelegramApiException e) {
+        } catch (TelegramApiException e){
             e.printStackTrace();
         }
     }
@@ -181,7 +180,7 @@ public class MyTelegramBot extends TelegramLongPollingBot {
         message.setReplyMarkup(markupInline);
         try {
             execute(message);
-        } catch (TelegramApiException e) {
+        } catch (TelegramApiException e){
             e.printStackTrace();
         }
     }

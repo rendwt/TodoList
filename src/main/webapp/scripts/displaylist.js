@@ -25,7 +25,7 @@ $(document).ready(function() {
     });
 });
 $(document).ready(function() {
-    $(document).on('click', '.status-button', function(event) {
+    $(document).on('click', '.status-button, .status-button-remove', function(event) {
         var id = $(this).data("id");
         var status = $(this).data("status");
         $.ajax({
@@ -42,7 +42,7 @@ $(document).ready(function() {
     });
 });
 $(document).ready(function() {
-    $(document).on('click', '.status-button1', function(event) {
+    $(document).on('click', '.status-button1, .status-button1-remove', function(event) {
         var id = $(this).data("id");
         var status = $(this).data("status");
         $.ajax({
@@ -63,5 +63,16 @@ $(document).ready(function () {
         var editForm = $(this).closest("tr").next(".edit-form");
         editForm.toggle();
         $(".edit-form").not(editForm).hide();
+    });
+});
+$(document).ready(function () {
+    $("#inputItemButton").click(function () {
+        $("#overlay").show();
+        $("#popup").show();
+    });
+
+    $("#closePopup").click(function () {
+        $("#overlay").hide();
+        $("#popup").hide();
     });
 });

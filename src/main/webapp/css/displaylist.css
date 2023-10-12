@@ -10,7 +10,7 @@ body {
 
 .container {
     margin: 20px auto;
-    max-width: 800px;
+    max-width: 1600px;
     background-color: #fff;
     padding: 20px;
     border-radius: 5px;
@@ -28,26 +28,39 @@ th {
     color: #fff;
     text-align: left;
     padding: 10px;
+    text-align: center;
 }
 
 td {
     padding: 10px;
+    text-align: center;
 }
+
+#list tr:nth-child(4n) {
+    background-color: #f2f2f2;
+}
+
+#completedlist tr:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+
 .edit-form input[type="text"],
 .edit-form input[type="number"]{
     box-sizing: border-box;
 }
+
 button {
     padding: 5px 10px;
-    background-color: #007BFF;
+    background-color: #28a745;
     color: #fff;
     border: none;
     cursor: pointer;
     margin-right: 5px;
+    border-radius: 2px;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #1e7e34;
 }
 
 a {
@@ -71,6 +84,23 @@ input[type="number"]{
     padding: 5px;
     margin-bottom: 10px;
 }
+.status-button-remove{
+    background-color: #FF3333;
+}
+
+.status-button1-remove{
+    background-color: #FF3333;
+}
+
+.status-button-remove:hover{
+    background-color: #CE2029;
+    color: #fff;
+}
+
+.status-button1-remove:hover{
+    background-color: #CE2029;
+    color: #fff;
+}
 
 .status-button1 {
     background-color: #28a745;
@@ -78,4 +108,157 @@ input[type="number"]{
 
 .status-button1:hover {
     background-color: #1e7e34;
+}
+
+.navbar ul {
+    background-color: #36454F;
+    list-style-type: none;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar ul li {
+    display: inline-block;
+    margin: 0 10px;
+    padding: 0;
+    line-height: 50px;
+}
+
+.navbar ul li:last-child {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.navbar a {
+    color: #fff;
+    background-color: #36454F;
+    border: 2px;
+    margin: 5px;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    position: relative;
+    border: 2px solid transparent;
+}
+
+.navbar a:hover {
+    text-decoration: none;
+    border: 2px solid white;
+}
+
+.session-attribute {
+    color: #fff;
+    font-size: 18px;
+    margin-right: 10px;
+    position: absolute;
+    top: 7px;
+    right: 100px;
+}
+
+#overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+}
+
+#popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    z-index: 1001;
+}
+
+#closePopup {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: #333;
+}
+
+#inputItemButton{
+    background-color: #007BFF;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+#inputItemButton:hover {
+    background-color: #0056b3;
+}
+
+.inputitem {
+    max-width: 400px;
+    background-color: #fff;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.inputitem h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.inputitem label {
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.inputitem input[type="text"],
+.inputitem input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.inputitem input[type="submit"] {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.inputitem input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.inputitem a {
+    text-decoration: none;
+    color: #007BFF;
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+}
+
+.inputitem a:hover {
+    text-decoration: underline;
+    color: #0056b3;
 }

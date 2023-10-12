@@ -29,19 +29,10 @@ public class AuthFilter implements Filter {
             httpResponse.sendRedirect(httpRequest.getContextPath() + "/login.jsp");
 
         } else {
-            String userRole = (String) session.getAttribute("userRole");
-            if (requestedURI.endsWith("/inputitem.jsp")) {
-                if (userRole != null && userRole.equals("admin")) {
-                    chain.doFilter(request, response);
-                } else {
-                    httpResponse.sendRedirect(httpRequest.getContextPath() + "/unauthorized.jsp");
-                }
-            } else {
-                httpResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-                httpResponse.setHeader("Pragma", "no-cache");
-                httpResponse.setDateHeader("Expires", 0);
-                chain.doFilter(request, response);
-            }
+            httpResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+            httpResponse.setHeader("Pragma", "no-cache");
+            httpResponse.setDateHeader("Expires", 0);
+            chain.doFilter(request, response);
         }
     }
     private boolean isAllowedPage(String requestedURI) {

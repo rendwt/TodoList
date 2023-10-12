@@ -30,7 +30,7 @@ public class InputItemConversation {
         switch (state) {
             case STATE_INITIAL:
                 state = STATE_ITEM_NAME;
-                return "You selected Option 1. Please enter the item name:";
+                return "Please enter the item name:";
             case STATE_ITEM_NAME:
                 itemName = text;
                 state = STATE_QUANTITY;

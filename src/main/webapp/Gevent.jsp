@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,6 +6,15 @@
     <link rel="stylesheet" type="text/css" href="css/calendar.css">
 </head>
 <body>
+    <div class="navbar">
+        <ul>
+            <li><a href="displaylist.jsp">To-Do List</a></li>
+            <li><a href="Gevent.jsp">Calendar Events</a></li>
+            <li><span class="session-attribute">User: <%= session.getAttribute("username") %> (<%= session.getAttribute("userRole") %>)</span></li>
+            <li><a href="logout">Logout</a></li>
+        </ul>
+    </div>
+    <div class="this">
     <h1>Calendar Events</h1>
         <div id="events">
         </div>
@@ -33,10 +43,11 @@
             </form>
     </div>
     </div>
-    <button id="createEventButton">Create Event</button>
-    <a href="index.jsp" >Back to Home Page</a>
-    <hr>
+    <c:if test="${sessionScope.userRole == 'admin'}">
+        <button id="createEventButton">Create Event</button>
+    </c:if>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="scripts/Gevent.js"></script>
+    </div>
 </body>
 </html>
