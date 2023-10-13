@@ -69,7 +69,6 @@ public class MyTelegramBot extends TelegramLongPollingBot {
 
     private void handleCallbackQuery(Update update) throws Exception {
         String callbackData = update.getCallbackQuery().getData();
-        System.out.println(callbackData);
         long chatId = update.getCallbackQuery().getMessage().getChatId();
         if (callbackData.equals("Input Items")){
             InputItemConversation conversation = new InputItemConversation(servletContext);
@@ -81,9 +80,7 @@ public class MyTelegramBot extends TelegramLongPollingBot {
             sendEventMenu(chatId);
         }else if (callbackData.equals("Create Event")){
             InputEventConversation conversation = new InputEventConversation();
-            System.out.println("entered");
             createEventConversationMap.put(chatId, conversation);
-            System.out.println("done");
             sendResponse(chatId, "Please enter the event name:");
         }else if (callbackData.equals("Display Events")){
             sendTableResponse(new DisplayEventsConversation().displayEvents(chatId));
