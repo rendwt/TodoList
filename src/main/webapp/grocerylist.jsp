@@ -9,8 +9,8 @@
 <body>
     <div class="navbar">
         <ul>
-            <li><a href="displaylist.jsp">To-Do List</a></li>
-            <li><a href="Gevent.jsp">Calendar Events</a></li>
+            <li><a href="grocerylist.jsp">Grocery List</a></li>
+            <li><a href="calendar.jsp">Calendar Events</a></li>
             <li><span class="session-attribute">User: <%= session.getAttribute("username") %> (<%= session.getAttribute("userRole") %>)</span></li>
             <li><a href="logout">Logout</a></li>
         </ul>

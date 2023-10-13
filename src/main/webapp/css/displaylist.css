@@ -49,6 +49,22 @@ td {
     box-sizing: border-box;
 }
 
+tr.edit-form {
+    display: none;
+}
+
+tr.edit-form td {
+    width: 40%;
+}
+
+tr.edit-form input{
+    width: 100%;
+}
+
+tr.edit-form input[type="submit"]{
+    width: auto;
+}
+
 button {
     padding: 5px 10px;
     background-color: #28a745;
@@ -172,6 +188,7 @@ input[type="number"]{
 }
 
 #popup {
+    width:400px;
     display: none;
     position: fixed;
     top: 50%;

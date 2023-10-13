@@ -18,7 +18,7 @@ public class DisplayEventsConversation {
     public SendMessage displayEvents(Long chatId) {
         SendMessage message = new SendMessage();
         try {
-            List<Event> events = eventDAO.getEvents("primary");
+            List<Event> events = eventDAO.getAllEvents("primary");
             if (events.isEmpty()) {
                 message.setText("No events to show");
             } else {

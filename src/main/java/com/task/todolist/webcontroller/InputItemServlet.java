@@ -29,7 +29,7 @@ public class InputItemServlet extends HttpServlet{
         String status = "to be completed";
         groceryListDAO.addListItem(itemName, qty, unit, status);
         PrintWriter out = response.getWriter();
-        response.sendRedirect("displaylist.jsp");
+        response.sendRedirect("grocerylist.jsp");
         out.close();
 
     }

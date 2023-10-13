@@ -26,6 +26,6 @@ public class EditItemServlet extends HttpServlet {
         int itemQty = Integer.parseInt(request.getParameter("itemQty"));
         String itemUnit = request.getParameter("itemUnit");
         groceryListDAO.editListItem(itemId,itemName,itemQty,itemUnit);
-        response.sendRedirect("displaylist.jsp");
+        response.sendRedirect("grocerylist.jsp");
     }
 }

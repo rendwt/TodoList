@@ -76,12 +76,22 @@ public class GoogleCalendarService {
     }
 
 
-    public List<Event> getEvents(String calendarId) throws IOException {
+    public List<Event> getAllEvents(String calendarId) throws IOException {
         if (calendarService != null) {
             Events events = calendarService.events().list(calendarId).execute();
             return events.getItems();
         } else {
             throw new IllegalStateException("Calendar service is not initialized.");
+        }
+    }
+
+    public Event getEvent(String calendarId, String eventId) throws Exception {
+        try {
+            Event event = calendarService.events().get(calendarId, eventId).execute();
+            return event;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("Error retrieving event from Google Calendar: " + e.getMessage());
         }
     }
 

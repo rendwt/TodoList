@@ -2,7 +2,6 @@ package com.task.todolist.webcontroller;
 
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.Event;
-import com.google.api.services.calendar.model.EventAttendee;
 import com.google.api.services.calendar.model.EventDateTime;
 import com.task.todolist.model.GoogleCalendarService;
 import javax.servlet.ServletException;
@@ -14,7 +13,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 
 @WebServlet("/createeventservlet")
 public class InputEventServlet extends HttpServlet {
@@ -30,7 +28,6 @@ public class InputEventServlet extends HttpServlet {
             String description = request.getParameter("description");
             String startDateTimeStr = request.getParameter("startDateTime");
             String endDateTimeStr = request.getParameter("endDateTime");
-            String participants = request.getParameter("participants");
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
@@ -45,14 +42,8 @@ public class InputEventServlet extends HttpServlet {
                     .setStart(new EventDateTime().setDateTime(start))
                     .setEnd(new EventDateTime().setDateTime(end));
 
-            String[] participantEmails = participants.split(",");
-            EventAttendee[] attendees = new EventAttendee[participantEmails.length];
-            for (int i = 0; i < participantEmails.length; i++) {
-                attendees[i] = new EventAttendee().setEmail(participantEmails[i].trim());
-            }
-            event.setAttendees(Arrays.asList(attendees));
             eventDAO.createEvent(event, "primary");
-            response.sendRedirect("Gevent.jsp");
+            response.sendRedirect("calendar.jsp");
         } catch (Exception e) {
             e.printStackTrace();
             response.getWriter().write("Error creating the event.");

@@ -7,7 +7,7 @@ body{
     font-family: Arial, sans-serif;
 }
 
-.this {
+.container {
     margin: 20px auto;
     max-width: 1600px;
     background-color: #fff;
@@ -18,8 +18,8 @@ body{
 }
 
 table {
-    border-collapse: collapse;
     width: 100%;
+    border-collapse: collapse;
     margin-top: 20px;
 }
 
@@ -28,19 +28,54 @@ th {
     color: #fff;
     text-align: left;
     padding: 10px;
-}
-
-tr:nth-child(even) {
-    background-color: #f2f2f2;
+    text-align: center;
 }
 
 td {
     padding: 10px;
-    border: 1px solid #ccc;
+    text-align: center;
 }
 
-hr {
-    border: 1px solid #ccc;
+table tr:nth-child(4n) {
+    background-color: #f2f2f2;
+}
+
+.edit-form input[type="text"],
+.edit-form input[type="number"],
+.edit-form input[type="datetime-local"]{
+    text-align: center;
+    box-sizing: border-box;
+}
+
+tr.edit-form {
+    display: none;
+}
+
+tr.edit-form td {
+    width: 40%;
+}
+
+tr.edit-form input{
+    width: 100%;
+}
+
+tr.edit-form input[type="submit"]{
+    width: auto;
+    margin-top: 5px;
+}
+
+button {
+    padding: 5px 10px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-right: 5px;
+    border-radius: 2px;
+}
+
+button:hover {
+    background-color: #1e7e34;
 }
 
 a {
@@ -52,6 +87,26 @@ a {
 
 a:hover {
     text-decoration: underline;
+}
+
+.edit-form {
+    background-color: #f2f2f2;
+}
+
+input[type="text"],
+input[type="number"]{
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.remove-button{
+    background-color: #FF3333;
+}
+
+.remove-button:hover{
+    background-color: #CE2029;
+    color: #fff;
 }
 
 #overlay {
@@ -66,6 +121,7 @@ a:hover {
 }
 
 #popup {
+    width:400px;
     display: none;
     position: fixed;
     top: 50%;
@@ -89,7 +145,6 @@ a:hover {
 }
 
 .createevents {
-    max-width: 400px;
     background-color: #fff;
     border-radius: 5px;
     text-align: center;
