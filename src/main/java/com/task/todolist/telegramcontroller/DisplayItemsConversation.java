@@ -30,13 +30,13 @@ public class DisplayItemsConversation {
 
     public SendMessage updateDisplay(Long chatId) {
         StringBuilder messageText = new StringBuilder();
-        messageText.append("1.Grocery List Items:\n");
-        messageText.append("No | Item Name | Quantity | Unit | Status\n");
+        messageText.append("1.Grocery List Items:");
+        messageText.append("\nNo | Item Name | Quantity | Unit | Status\n");
         messageText = CreateMessage(groceryList,messageText);
-        messageText.append("\n\n2.Completed Grocery List Items:\n");
-        messageText.append("No | Item Name | Quantity | Unit | Status\n");
+        messageText.append("\n2.Completed Grocery List Items:");
+        messageText.append("\nNo | Item Name | Quantity | Unit | Status\n");
         messageText = CreateMessage(completedGroceryList,messageText);
-        messageText.append("/menu to view main menu");
+        messageText.append("\n/menu to view main menu");
         SendMessage message = new SendMessage();
         message.setChatId(chatId.toString());
         message.setText(messageText.toString());

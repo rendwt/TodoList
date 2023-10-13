@@ -16,14 +16,9 @@ public class CalendarEventMenu {
         row.add(button1);
 
         InlineKeyboardButton button2 = new InlineKeyboardButton();
-        button2.setText("Update event");
+        button2.setText("Delete event");
         button2.setCallbackData("Update event");
         row.add(button2);
-
-        InlineKeyboardButton button3 = new InlineKeyboardButton();
-        button3.setText("Delete event");
-        button3.setCallbackData("Delete event");
-        row.add(button3);
 
         keyboard.add(row);
         return keyboard;
