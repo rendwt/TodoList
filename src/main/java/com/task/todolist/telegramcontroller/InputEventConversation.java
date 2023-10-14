@@ -17,6 +17,7 @@ public class InputEventConversation {
     private static final int STATE_EVENT_SUMMARY = 2;
     private static final int STATE_EVENT_START_DATE= 3;
     private static final int STATE_EVENT_END_DATE = 4;
+    private static final int STATE_EVENT_QUICK_ADD= 5;
     private int state;
     private String eventSummary;
     private String eventDescription;
@@ -28,6 +29,10 @@ public class InputEventConversation {
 
     public InputEventConversation() {
         this.state = STATE_INITIAL;
+        eventDAO = new GoogleCalendarService();
+    }
+    public InputEventConversation(int state) {
+        this.state = state;
         eventDAO = new GoogleCalendarService();
     }
 
@@ -63,6 +68,13 @@ public class InputEventConversation {
                 eventEnd = new DateTime(endDateTime.toInstant(ZoneOffset.UTC).toEpochMilli());
                 state = STATE_INITIAL;
                 return createEventAndSendConfirmation();
+
+            case STATE_EVENT_QUICK_ADD:
+                String qsummary = text;
+                state = STATE_INITIAL;
+                if(eventDAO.addQuick(qsummary)){
+                    return ("Event added successfully");
+                }
             default:
                 state = STATE_INITIAL;
                 return "Invalid input. Please start over.";

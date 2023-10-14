@@ -25,6 +25,11 @@ public class CalendarEventMenu {
         button3.setCallbackData("Delete event");
         row.add(button3);
 
+        InlineKeyboardButton button4 = new InlineKeyboardButton();
+        button3.setText("quick add event");
+        button3.setCallbackData("quick add event");
+        row.add(button3);
+
         keyboard.add(row);
         return keyboard;
     }

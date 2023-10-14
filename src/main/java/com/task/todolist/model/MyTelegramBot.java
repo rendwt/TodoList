@@ -75,15 +75,20 @@ public class MyTelegramBot extends TelegramLongPollingBot {
         } else if (callbackData.equals("Display Events")) {
             sendTableResponse(new DisplayEventsConversation().displayEvents(chatId));
             sendCalendarEventMenu(chatId);
-        }else if (callbackData.equals("Update item") || callbackData.equals("Delete item")){
+        } else if (callbackData.equals("Update item") || callbackData.equals("Delete item")) {
             UpdateItemConversation conversation = new UpdateItemConversation(servletContext);
             updateItemConversationMap.put(chatId, conversation);
             conversation.setCallBackData(callbackData);
             sendResponse(chatId, conversation.handleInput(update.getCallbackQuery().getMessage()));
-        }else if (callbackData.equals("Edit item")){
+        } else if (callbackData.equals("Edit item")) {
             EditItemConversation conversation = new EditItemConversation(servletContext);
-            editItemConversationMap.put(chatId,conversation);
+            editItemConversationMap.put(chatId, conversation);
             sendResponse(chatId, conversation.handleInput(update.getCallbackQuery().getMessage()));
+        } else if (callbackData.equals(" quick add event")) {
+           InputEventConversation ec=new InputEventConversation(5);
+          createEventConversationMap.put(chatId,ec);
+          sendResponse(chatId,"Enter Quick Add Summary");
+
         }
     }
 

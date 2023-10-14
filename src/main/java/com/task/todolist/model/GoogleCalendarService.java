@@ -98,4 +98,16 @@ public class GoogleCalendarService {
         }
         return credential;
     }
+
+    public boolean addQuick(String eventText) throws IOException {
+        boolean cnfrm=false;
+        try{
+            calendarService.events().quickAdd("primary",eventText).setText(eventText).execute();
+            cnfrm=true;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return cnfrm;
+    }
 }
